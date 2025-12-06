@@ -5,6 +5,8 @@
 [Open Affected Page](https://www.hackquest.io/my-community/HackQuest/India-Quack-Believers)
 
 ---
+## Check live page with video
+[Live Bug Reporting Page](https://sundaralok.github.io/HackQuest-Advocate/)
 
 ## Bug Summary
 The **Type Filter** inside the **My Quest** page is not functioning correctly.  
@@ -56,9 +58,4 @@ Click the images to view larger versions:
 
 ## Recorded Video Demonstration
 The video demonstrates the bug.  
-Click the fullscreen button in the video player to maximize view.
-
-[![Bug Video](Bugs/Bug-2025-12-06-22-33-26.mp4)](Bugs/Bug-2025-12-06-22-33-26.mp4)  
-
-> ⚠️ The video is muted for clarity.
-
+Check the live page to see the video.
