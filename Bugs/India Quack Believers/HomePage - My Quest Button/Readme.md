@@ -58,7 +58,7 @@ Click the images to view larger versions:
 The video demonstrates the bug.  
 Click the fullscreen button in the video player to maximize view.
 
-[![Bug Video](Bug-2025-12-06-20-05-58.mp4)](Bug-2025-12-06-20-05-58.mp4)  
+[![Bug Video](Bug-2025-12-06-22-33-26.mp4)](Bug-2025-12-06-22-33-26.mp4)  
 
 > ⚠️ The video is muted for clarity.
 
