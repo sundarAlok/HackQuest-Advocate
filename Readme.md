@@ -1,64 +1,65 @@
-# 🐞 Bug Report – India Quack Believer “My Quest” Filters
+# Bug Report: Profile HackQuest Score Mismatch
 
-**Reported On:** 2025-12-06
+## Project Overview
+This project contains a detailed bug report for an issue in the HackQuest platform's user profile page. The bug involves a mismatch in the displayed HackQuest Score statistics, specifically showing incorrect values for "Articles Published" and "Communities Connected" in the summary section compared to the actual detailed sections on the page.
 
-[Open Affected Page](https://www.hackquest.io/my-community/HackQuest/India-Quack-Believers)
+**Reported On:** 10/12/2025  
+**Affected Profile:** [HackQuest User Profile](https://www.hackquest.io/user/2087317)
 
----
+## Bug Description
+In the **Profile → HackQuest Score** section, the values are displayed as:
+- **Articles Published = 0**
+- **Communities Connected = 0**
 
-## Bug Summary
-The **Type Filter** inside the **My Quest** page is not functioning correctly.  
-When selecting **Type = Approved**, the system incorrectly shows:
+However, further down on the same profile page:
+- The **Article section shows 1 published article**.
+- The **Community section shows 2 connected communities**.
 
-**“Nothing Here”**  
+This indicates that the HackQuest Score section is not pulling the correct data or not updating properly.
 
-even though approved quests are present and visible without applying the filter.
-
----
-
-## Criticality & Impact Details
-
-**Criticality:** 🟡 Medium Severity
-
-**Area of Impact:**  
-- Frontend / Filtering Logic  
-- UI/UX Behavior  
+## Criticality & Impact
+- **Criticality:** Medium Severity
+- **Area of Impact:**
+  - UI/Frontend Data Display
+  - Backend / Data Fetch Logic
 
 ### How This Bug Affects User Experience
-- Users cannot filter their quests based on type.  
-- Leads to confusion since visible approved items “disappear” when filter is applied.  
-- Breaks the core usability of the My Quest page.  
-- Makes it difficult for users to track progress or validate rewards.  
-- Reduces trust in the filtering system.  
+- Shows inaccurate HackQuest Score summary.
+- Causes confusion for users when comparing the summary vs. detailed sections.
+- Reduces trust in profile statistics.
+- May affect leaderboard or score-based features if linked.
 
----
+## Steps to Reproduce (Validate the Bug)
+1. Open the user’s Profile page.
+2. Scroll to the **HackQuest Score** section.
+3. Observe that:
+   - Articles Published = 0
+   - Communities Connected = 0
+4. Now scroll further down to the **Articles section**.
+5. You will see **1 article published**.
+6. Scroll to the **Communities section**.
+7. You will see **2 connected communities**.
+8. Mismatch confirmed.
 
-## Steps to Reproduce
-1. Open the India Quack Believer community homepage.  
-2. Click on the **My Quest** button.  
-3. Observe that approved quests are visible in the list.  
-4. Select any date range using the **Time Range** filter.  
-5. Observe that approved quests still remain visible.  
-6. Now select **Type = Approved** from the dropdown.  
-7. The screen incorrectly shows **“Nothing Here”**.  
-8. Repeat with different date ranges or no date range → bug persists.  
+## Files Included
+- `index.html`: The main bug report page with detailed description, steps, and embedded media.
+- `HackQuest-Score.png`: Screenshot of the HackQuest Score section showing incorrect values.
+- `Articles-Published.png`: Screenshot of the Articles section showing 1 published article.
+- `Communities-connected.png`: Screenshot of the Communities section showing 2 connected communities.
+- `User Profile - HackQuest and 6 more pages - Personal - Microsoft​ Edge 2025-12-10 19-52-45.mp4`: Recorded video demonstration (not included in README for GitHub compatibility).
 
----
+## How to View the Report
+To view the full bug report with interactive elements:
+1. Open `index.html` in a web browser.
+2. The page includes clickable screenshots that open in a fullscreen overlay.
+3. The video demonstration is embedded and can be played directly.
 
 ## Screenshots
-Click the images to view larger versions:
+### HackQuest Score Section (Incorrect Values)
+![HackQuest Score](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/HackQuest-Score.png)
 
-| ![My Quest Button](Bugs/my-quest-button.png) | ![Time Range Only](Bugs/time-range-only.png) |
-|---------------------------------------|----------------------------------------|
-| ![Type Approved](Bugs/type-approved.png)   | ![Type & Time Range Selected](Bugs/type-time-range-selected.png) |
+### Articles Section (Correct Value: 1 Article)
+![Articles Published](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Articles-Published.png)
 
----
-
-## Recorded Video Demonstration
-The video demonstrates the bug.  
-Click the fullscreen button in the video player to maximize view.
-
-[![Bug Video](Bugs/Bug-2025-12-06-22-33-26.mp4)](Bugs/Bug-2025-12-06-22-33-26.mp4)  
-
-> ⚠️ The video is muted for clarity.
-
+### Communities Section (Correct Value: 2 Communities)
+![Communities Connected](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Communities-connected.png)

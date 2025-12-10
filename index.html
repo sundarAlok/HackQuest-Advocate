@@ -3,120 +3,122 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bug Report – Indian Quest Believer - My Quest Filter Issue</title>
+<title>Bug Report – Profile HackQuest Score Mismatch</title>
 
 <!-- =================== STYLES =================== -->
 <style>
     body {
         font-family: "Inter", "Segoe UI", sans-serif;
-        background: #eef1f7;
+        background: #f5f2ff;
         margin: 0;
         padding: 0;
-        color: #222;
+        color: #2a244a;
     }
 
     .container {
-        max-width: 1100px;
+        max-width: 1150px;
         margin: auto;
-        padding: 25px 20px;
+        padding: 30px 20px;
     }
 
     h1 {
         text-align: center;
-        font-size: 34px;
-        font-weight: 700;
-        color: #1a73e8;
-        margin-bottom: 5px;
+        font-size: 36px;
+        font-weight: 800;
+        color: #6a1b9a;
+        margin-bottom: 8px;
     }
 
     .timestamp {
         text-align: center;
-        margin-bottom: 25px;
-        color: #444;
+        margin-bottom: 30px;
+        color: #463c6f;
         font-size: 15px;
     }
 
     a.page-link {
         display: inline-block;
-        margin: 0 auto 30px auto;
-        padding: 12px 20px;
-        background: #1a73e8;
+        margin: 0 auto 35px auto;
+        padding: 13px 22px;
+        background: #6a1b9a;
         color: white;
-        border-radius: 8px;
+        border-radius: 10px;
         text-decoration: none;
         font-weight: 600;
-        transition: 0.3s;
+        transition: 0.25s;
     }
     a.page-link:hover {
-        background: #155fc2;
+        background: #4a1670;
     }
 
     h2 {
-        margin-top: 30px;
-        margin-bottom: 15px;
-        color: #1a73e8;
-        font-size: 24px;
+        margin-top: 35px;
+        margin-bottom: 14px;
+        color: #6a1b9a;
+        font-size: 23px;
+        font-weight: 700;
     }
 
     .card {
-        background: white;
-        padding: 25px;
-        margin-top: 20px;
-        border-radius: 14px;
-        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
-        border-left: 6px solid #1a73e8;
+        background: #ffffff;
+        padding: 28px;
+        margin-top: 22px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.09);
+        border-left: 6px solid #6a1b9a;
     }
 
     ul, ol {
-        line-height: 1.8;
+        line-height: 1.75;
         font-size: 16px;
+        margin-left: 10px;
     }
 
-    /* ---------- TAGS / BADGES ----------- */
+    /* ---------- BADGES ----------- */
     .badge {
         display: inline-block;
-        padding: 6px 12px;
-        border-radius: 6px;
+        padding: 7px 13px;
+        border-radius: 8px;
         font-weight: 600;
         margin-top: 10px;
         font-size: 14px;
     }
 
-    .badge-medium { background: #ffeeba; color: #8a6d3b; }
-    .badge-frontend { background: #cfe2ff; color: #084298; }
-    .badge-ux { background: #d1e7dd; color: #0f5132; }
+    .badge-medium { background: #ffe0ec; color: #8a004c; }
+    .badge-frontend { background: #e0f9ff; color: #00697a; }
+    .badge-logic { background: #e6dbff; color: #4d2c8c; }
 
     /* ---------- IMAGE GALLERY ---------- */
     .gallery {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
-        margin-top: 15px;
+        gap: 18px;
+        margin-top: 18px;
     }
 
     .gallery img {
-        width: calc(50% - 15px);
-        height: 180px;
+        width: calc(50% - 18px);
+        height: 190px;
         object-fit: cover;
-        border-radius: 10px;
+        border-radius: 12px;
         cursor: pointer;
         transition: .3s;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+        box-shadow: 0 3px 12px rgba(0,0,0,0.2);
     }
 
     .gallery img:hover {
-        transform: scale(1.04);
+        transform: scale(1.05);
     }
 
     /* ---------- IMAGE OVERLAY ---------- */
     #imgOverlay {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.85);
+        background: rgba(0,0,0,0.88);
         display: none;
         justify-content: center;
         align-items: center;
-        z-index: 10000;
+        z-index: 2000;
         animation: fadein .25s;
     }
 
@@ -128,14 +130,14 @@
         max-width: 92%;
         max-height: 92%;
         border-radius: 12px;
-        box-shadow: 0 0 25px rgba(0,0,0,0.5);
+        box-shadow: 0 0 25px rgba(0,0,0,0.55);
     }
 
     #closeOverlay {
         position: absolute;
-        top: 20px;
-        right: 35px;
-        font-size: 45px;
+        top: 18px;
+        right: 30px;
+        font-size: 48px;
         font-weight: bold;
         color: white;
         cursor: pointer;
@@ -143,15 +145,15 @@
 
     /* ---------- VIDEO SECTION ---------- */
     .video-wrapper {
-        margin-top: 15px;
-        border-radius: 12px;
+        margin-top: 18px;
+        border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.18);
     }
 
     video {
         width: 100%;
-        border-radius: 12px;
+        border-radius: 14px;
     }
 
 </style>
@@ -161,13 +163,13 @@
 
 <div class="container">
 
-    <h1>Bug Report – India Quack Believer “My Quest” Filters</h1>
+    <h1>Bug Report – Profile HackQuest Score Mismatch</h1>
 
-    <p class="timestamp"><strong>Reported On:</strong> <span id="todayDate"></span></p>
+    <p class="timestamp"><strong>Reported On:</strong> 10/12/2025</span></p>
 
     <center>
-        <a href="https://www.hackquest.io/my-community/HackQuest/India-Quack-Believers" class="page-link" target="_blank">
-            Open Affected Page
+        <a href="https://www.hackquest.io/user/2087317" class="page-link" target="_blank">
+            Open Affected Profile Page
         </a>
     </center>
 
@@ -175,10 +177,17 @@
     <div class="card">
         <h2>Bug Summary</h2>
         <p>
-            The <strong>Type Filter</strong> inside the <strong>My Quest</strong> page is not functioning correctly.  
-            When selecting <strong>Type = Approved</strong>, the system incorrectly shows 
-            <strong>“Nothing Here”</strong> despite the fact that approved quests are present and visible without applying the filter.
+            In the <strong>Profile → HackQuest Score</strong> section, the values for  
+            <strong>Articles Published = 0</strong> and <strong>Communities Connected = 0</strong>  
+            are displayed incorrectly.
+            <br><br>
+            However, further down on the same profile page:
         </p>
+        <ul>
+            <li>The <strong>Article section shows 1 published article</strong>.</li>
+            <li>The <strong>Community section shows 2 connected communities</strong>.</li>
+        </ul>
+        <p>This mismatch indicates the HackQuest Score section is not pulling correct data or not updating properly.</p>
     </div>
 
     <!-- CRITICALITY -->
@@ -189,31 +198,35 @@
         <span class="badge badge-medium">Medium Severity</span>
 
         <p style="margin-top:18px;"><strong>Area of Impact:</strong></p>
-        <span class="badge badge-frontend">Frontend / Filtering Logic</span>
-        <span class="badge badge-ux">UI/UX Behavior</span>
+        <span class="badge badge-frontend">UI/Frontend Data Display</span>
+        <span class="badge badge-logic">Backend / Data Fetch Logic</span>
 
-        <h3 style="margin-top:25px; color:#333;">How This Bug Affects User Experience</h3>
+        <h3 style="margin-top:28px; color:#2a244a;">How This Bug Affects User Experience</h3>
         <ul>
-            <li>Users cannot filter their quests based on type.</li>
-            <li>Leads to confusion since visible approved items “disappear” when filter is applied.</li>
-            <li>Breaks the core usability of the My Quest page.</li>
-            <li>Makes it difficult for users to track progress or validate rewards.</li>
-            <li>Reduces trust in the filtering system.</li>
+            <li>Shows inaccurate HackQuest Score summary.</li>
+            <li>Confusion for users comparing summary vs. detailed sections.</li>
+            <li>Reduces trust in profile statistics.</li>
+            <li>May affect leaderboard or score-based features if linked.</li>
         </ul>
     </div>
 
-    <!-- STEPS TO VALIDATE -->
+    <!-- STEPS TO REPRODUCE -->
     <div class="card">
         <h2>Steps to Reproduce (Validate the Bug)</h2>
         <ol>
-            <li>Open the India Quack Believer community homepage.</li>
-            <li>Click on the <strong>My Quest</strong> button.</li>
-            <li>Observe that approved quests are visible in the list.</li>
-            <li>Select any date range using the <strong>Time Range</strong> filter.</li>
-            <li>Observe that approved quests still remain visible.</li>
-            <li>Now select <strong>Type = Approved</strong> from the dropdown.</li>
-            <li>The screen incorrectly shows <strong>“Nothing Here”</strong>.</li>
-            <li>Repeat with different date ranges or no date range → bug persists.</li>
+            <li>Open the user’s Profile page.</li>
+            <li>Scroll to the <strong>HackQuest Score</strong> section.</li>
+            <li>Observe that:
+                <ul>
+                    <li>Articles Published = 0</li>
+                    <li>Communities Connected = 0</li>
+                </ul>
+            </li>
+            <li>Now scroll further down to the <strong>Articles section</strong>.</li>
+            <li>You will see <strong>1 article published</strong>.</li>
+            <li>Scroll to the <strong>Communities section</strong>.</li>
+            <li>You will see <strong>2 connected communities</strong>.</li>
+            <li>Mismatch confirmed.</li>
         </ol>
     </div>
 
@@ -221,13 +234,12 @@
     <div class="card">
         <h2>Screenshots</h2>
 
-        <p>Click on any screenshot to enlarge it.</p>
+        <p>Click on any screenshot to enlarge.</p>
 
         <div class="gallery">
-            <img src="my-quest-button.png" onclick="openOverlay(this.src)">
-            <img src="time-range-only.png" onclick="openOverlay(this.src)">
-            <img src="type-approved.png" onclick="openOverlay(this.src)">
-            <img src="type-time-range-selected.png" onclick="openOverlay(this.src)">
+            <img src="Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/HackQuest-Score.png" onclick="openOverlay(this.src)">
+            <img src="Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Articles-Published.png" onclick="openOverlay(this.src)">
+            <img src="Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Communities-connected.png" onclick="openOverlay(this.src)">
         </div>
     </div>
 
@@ -235,11 +247,11 @@
     <div class="card">
         <h2>Recorded Video Demonstration</h2>
 
-        <p>Click the fullscreen button in the video player to maximize the view.</p>
+        <p>Use fullscreen for better visibility.</p>
 
         <div class="video-wrapper">
             <video controls playsinline muted preload="metadata">
-                <source src="Bug-2025-12-06-22-33-26.mp4" type="video/mp4">
+                <source src="Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/User Profile - HackQuest and 6 more pages - Personal - Microsoft​ Edge 2025-12-10 19-52-45.mp4" type="video/mp4">
             </video>
         </div>
     </div>
@@ -263,7 +275,7 @@
         document.getElementById("imgOverlay").style.display = "none";
     }
 
-    // Auto Timestamp (Today)
+    // Auto Timestamp
     const today = new Date();
     document.getElementById("todayDate").innerText = today.toLocaleDateString();
 </script>

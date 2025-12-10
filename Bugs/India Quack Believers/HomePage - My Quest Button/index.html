@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bug Report – Indian Quest Believer - My Quest Filter Issue</title>
+
+<!-- =================== STYLES =================== -->
+<style>
+    body {
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: #eef1f7;
+        margin: 0;
+        padding: 0;
+        color: #222;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 25px 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 34px;
+        font-weight: 700;
+        color: #1a73e8;
+        margin-bottom: 5px;
+    }
+
+    .timestamp {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #444;
+        font-size: 15px;
+    }
+
+    a.page-link {
+        display: inline-block;
+        margin: 0 auto 30px auto;
+        padding: 12px 20px;
+        background: #1a73e8;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+    a.page-link:hover {
+        background: #155fc2;
+    }
+
+    h2 {
+        margin-top: 30px;
+        margin-bottom: 15px;
+        color: #1a73e8;
+        font-size: 24px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        margin-top: 20px;
+        border-radius: 14px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        border-left: 6px solid #1a73e8;
+    }
+
+    ul, ol {
+        line-height: 1.8;
+        font-size: 16px;
+    }
+
+    /* ---------- TAGS / BADGES ----------- */
+    .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .badge-medium { background: #ffeeba; color: #8a6d3b; }
+    .badge-frontend { background: #cfe2ff; color: #084298; }
+    .badge-ux { background: #d1e7dd; color: #0f5132; }
+
+    /* ---------- IMAGE GALLERY ---------- */
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .gallery img {
+        width: calc(50% - 15px);
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: .3s;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+    }
+
+    .gallery img:hover {
+        transform: scale(1.04);
+    }
+
+    /* ---------- IMAGE OVERLAY ---------- */
+    #imgOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        animation: fadein .25s;
+    }
+
+    @keyframes fadein {
+        from { opacity: 0; } to { opacity: 1; }
+    }
+
+    #imgOverlay img {
+        max-width: 92%;
+        max-height: 92%;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    }
+
+    #closeOverlay {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        font-size: 45px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* ---------- VIDEO SECTION ---------- */
+    .video-wrapper {
+        margin-top: 15px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+    }
+
+    video {
+        width: 100%;
+        border-radius: 12px;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Bug Report – India Quack Believer “My Quest” Filters</h1>
+
+    <p class="timestamp"><strong>Reported On:</strong> <span id="todayDate"></span></p>
+
+    <center>
+        <a href="https://www.hackquest.io/my-community/HackQuest/India-Quack-Believers" class="page-link" target="_blank">
+            Open Affected Page
+        </a>
+    </center>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <h2>Bug Summary</h2>
+        <p>
+            The <strong>Type Filter</strong> inside the <strong>My Quest</strong> page is not functioning correctly.  
+            When selecting <strong>Type = Approved</strong>, the system incorrectly shows 
+            <strong>“Nothing Here”</strong> despite the fact that approved quests are present and visible without applying the filter.
+        </p>
+    </div>
+
+    <!-- CRITICALITY -->
+    <div class="card">
+        <h2>Criticality & Impact Details</h2>
+
+        <p><strong>Criticality:</strong></p>
+        <span class="badge badge-medium">Medium Severity</span>
+
+        <p style="margin-top:18px;"><strong>Area of Impact:</strong></p>
+        <span class="badge badge-frontend">Frontend / Filtering Logic</span>
+        <span class="badge badge-ux">UI/UX Behavior</span>
+
+        <h3 style="margin-top:25px; color:#333;">How This Bug Affects User Experience</h3>
+        <ul>
+            <li>Users cannot filter their quests based on type.</li>
+            <li>Leads to confusion since visible approved items “disappear” when filter is applied.</li>
+            <li>Breaks the core usability of the My Quest page.</li>
+            <li>Makes it difficult for users to track progress or validate rewards.</li>
+            <li>Reduces trust in the filtering system.</li>
+        </ul>
+    </div>
+
+    <!-- STEPS TO VALIDATE -->
+    <div class="card">
+        <h2>Steps to Reproduce (Validate the Bug)</h2>
+        <ol>
+            <li>Open the India Quack Believer community homepage.</li>
+            <li>Click on the <strong>My Quest</strong> button.</li>
+            <li>Observe that approved quests are visible in the list.</li>
+            <li>Select any date range using the <strong>Time Range</strong> filter.</li>
+            <li>Observe that approved quests still remain visible.</li>
+            <li>Now select <strong>Type = Approved</strong> from the dropdown.</li>
+            <li>The screen incorrectly shows <strong>“Nothing Here”</strong>.</li>
+            <li>Repeat with different date ranges or no date range → bug persists.</li>
+        </ol>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="card">
+        <h2>Screenshots</h2>
+
+        <p>Click on any screenshot to enlarge it.</p>
+
+        <div class="gallery">
+            <img src="my-quest-button.png" onclick="openOverlay(this.src)">
+            <img src="time-range-only.png" onclick="openOverlay(this.src)">
+            <img src="type-approved.png" onclick="openOverlay(this.src)">
+            <img src="type-time-range-selected.png" onclick="openOverlay(this.src)">
+        </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="card">
+        <h2>Recorded Video Demonstration</h2>
+
+        <p>Click the fullscreen button in the video player to maximize the view.</p>
+
+        <div class="video-wrapper">
+            <video controls playsinline muted preload="metadata">
+                <source src="Bug-2025-12-06-22-33-26.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+</div>
+
+<!-- FULLSCREEN IMAGE OVERLAY -->
+<div id="imgOverlay" onclick="closeOverlay()">
+    <span id="closeOverlay">&times;</span>
+    <img id="overlayImg" src="" />
+</div>
+
+<!-- =================== SCRIPT =================== -->
+<script>
+    function openOverlay(src) {
+        document.getElementById("imgOverlay").style.display = "flex";
+        document.getElementById("overlayImg").src = src;
+    }
+
+    function closeOverlay() {
+        document.getElementById("imgOverlay").style.display = "none";
+    }
+
+    // Auto Timestamp (Today)
+    const today = new Date();
+    document.getElementById("todayDate").innerText = today.toLocaleDateString();
+</script>
+
+</body>
+</html>
