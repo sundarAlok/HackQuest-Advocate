@@ -61,18 +61,14 @@ To view the full bug report with interactive elements:
 
 ## Screenshots
 ### HackQuest Score Section (Incorrect Values)
-![HackQuest Score](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/HackQuest-Score.png)
+![HackQuest Score](HackQuest-Score.png)
 
 
 ### Articles Section (Correct Value: 1 Article)
-![Articles Published](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Articles-Published.png)
+![Articles Published](Articles-Published.png)
 
 ### Communities Section (Correct Value: 2 Communities)
-![Communities Connected](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Communities-connected.png)
-
-| ![My Quest Button](Bugs/my-quest-button.png) | ![Time Range Only](Bugs/time-range-only.png) |
-|---------------------------------------|----------------------------------------|
-| ![Type Approved](Bugs/type-approved.png)   | ![Type & Time Range Selected](Bugs/type-time-range-selected.png) |
+![Communities Connected](Communities-connected.png)
 
 ---
 
