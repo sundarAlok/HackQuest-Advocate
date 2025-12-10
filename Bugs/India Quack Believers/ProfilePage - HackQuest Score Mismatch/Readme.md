@@ -6,10 +6,16 @@ This project contains a detailed bug report for an issue in the HackQuest platfo
 **Reported On:** 10/12/2025  
 **Affected Profile:** [HackQuest User Profile](https://www.hackquest.io/user/2087317)
 
+<<<<<<< HEAD
 ## Bug Description
 In the **Profile → HackQuest Score** section, the values are displayed as:
 - **Articles Published = 0**
 - **Communities Connected = 0**
+=======
+---
+## Check live page with video
+[Live Bug Reporting Page](https://sundaralok.github.io/HackQuest-Advocate/)
+>>>>>>> 29fb83d76a5640750f44d618e75bbb6d43f0ee40
 
 However, further down on the same profile page:
 - The **Article section shows 1 published article**.
@@ -58,8 +64,20 @@ To view the full bug report with interactive elements:
 ### HackQuest Score Section (Incorrect Values)
 ![HackQuest Score](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/HackQuest-Score.png)
 
+<<<<<<< HEAD
 ### Articles Section (Correct Value: 1 Article)
 ![Articles Published](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Articles-Published.png)
 
 ### Communities Section (Correct Value: 2 Communities)
 ![Communities Connected](Bugs\India Quack Believers\ProfilePage - HackQuest Score Mismatch/Communities-connected.png)
+=======
+| ![My Quest Button](Bugs/my-quest-button.png) | ![Time Range Only](Bugs/time-range-only.png) |
+|---------------------------------------|----------------------------------------|
+| ![Type Approved](Bugs/type-approved.png)   | ![Type & Time Range Selected](Bugs/type-time-range-selected.png) |
+
+---
+
+## Recorded Video Demonstration
+The video demonstrates the bug.  
+Check the live page to see the video.
+>>>>>>> 29fb83d76a5640750f44d618e75bbb6d43f0ee40
