@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bug Report – GitHub Connection Failure During Profile Completion</title>
+
+<!-- =================== STYLES =================== -->
+<style>
+    body {
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: #eef7ff;
+        margin: 0;
+        padding: 0;
+        color: #1e2a38;
+    }
+
+    .container {
+        max-width: 1150px;
+        margin: auto;
+        padding: 30px 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 800;
+        color: #005b99;
+        margin-bottom: 8px;
+    }
+
+    .timestamp {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #406781;
+        font-size: 15px;
+    }
+
+    a.page-link {
+        display: inline-block;
+        margin: 0 auto 35px auto;
+        padding: 13px 22px;
+        background: #005b99;
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+    a.page-link:hover {
+        background: #003d66;
+    }
+
+    h2 {
+        margin-top: 35px;
+        margin-bottom: 14px;
+        color: #005b99;
+        font-size: 23px;
+        font-weight: 700;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 28px;
+        margin-top: 22px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.09);
+        border-left: 6px solid #005b99;
+    }
+
+    ul, ol {
+        line-height: 1.75;
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
+    /* ---------- BADGES ----------- */
+    .badge {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .badge-medium { background: #ffe8d6; color: #9b4600; }
+    .badge-ui { background: #d2f2ff; color: #005774; }
+    .badge-backend { background: #e0e2ff; color: #242a88; }
+
+    /* ---------- IMAGE GALLERY ---------- */
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 18px;
+    }
+
+    .gallery img {
+        width: calc(50% - 18px);
+        height: 190px;
+        object-fit: cover;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: .3s;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    }
+
+    .gallery img:hover {
+        transform: scale(1.05);
+    }
+
+    /* ---------- IMAGE OVERLAY ---------- */
+    #imgOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.88);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        animation: fadein .25s;
+    }
+
+    @keyframes fadein {
+        from { opacity: 0; } to { opacity: 1; }
+    }
+
+    #imgOverlay img {
+        max-width: 92%;
+        max-height: 92%;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.55);
+    }
+
+    #closeOverlay {
+        position: absolute;
+        top: 18px;
+        right: 30px;
+        font-size: 48px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* ---------- VIDEO SECTION ---------- */
+    .video-wrapper {
+        margin-top: 18px;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+    }
+
+    video {
+        width: 100%;
+        border-radius: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Bug Report – GitHub Connection Failure During Profile Completion</h1>
+
+    <p class="timestamp"><strong>Reported On:</strong> 12/12/2025</p>
+
+    <center>
+        <a href="https://www.hackquest.io/profile" class="page-link" target="_blank">
+            Open Profile Completion Page
+        </a>
+    </center>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <h2>Bug Summary</h2>
+        <p>
+            When accessing the <strong>Complete Profile</strong> section inside HackQuest Profile, 
+            the <strong>GitHub connection step</strong> behaves incorrectly.
+        </p>
+
+        <ul>
+            <li>The system first shows <strong>“Connected to GitHub”</strong>.</li>
+            <li>Immediately after, it shows an <strong>error stating GitHub is not connected</strong>.</li>
+            <li>However, the <strong>Profile Integrity Score section marks GitHub as successfully connected</strong>.</li>
+        </ul>
+
+        <p>
+            Due to this inconsistency, the user cannot proceed to the next profile completion step,
+            which blocks profile onboarding.
+        </p>
+    </div>
+
+    <!-- CRITICALITY -->
+    <div class="card">
+        <h2>Criticality & Impact Details</h2>
+
+        <p><strong>Criticality:</strong></p>
+        <span class="badge badge-medium">Medium Severity</span>
+
+        <p style="margin-top:18px;"><strong>Area of Impact:</strong></p>
+        <span class="badge badge-ui">UI / Frontend Validation</span>
+        <span class="badge badge-backend">Authentication Logic / OAuth Callback</span>
+
+        <h3 style="margin-top:28px; color:#1e2a38;">How This Bug Affects User Experience</h3>
+        <ul>
+            <li>Prevents users from completing their onboarding/profile setup.</li>
+            <li>Creates confusion due to contradictory UI states (connected + error).</li>
+            <li>May reduce trust in profile accuracy and integration stability.</li>
+            <li>Breaks profile completeness score progression.</li>
+        </ul>
+    </div>
+
+    <!-- STEPS TO REPRODUCE -->
+    <div class="card">
+        <h2>Steps to Reproduce (Validate the Bug)</h2>
+        <ol>
+            <li>Go to your HackQuest Profile.</li>
+            <li>Click the <strong>Complete Profile</strong> button.</li>
+            <li>Navigate to the <strong>Connect GitHub</strong> section.</li>
+            <li>Click <strong>Connect with GitHub</strong> and authorize the request.</li>
+            <li>Observe:
+                <ul>
+                    <li>The system briefly shows <strong>Connected</strong>.</li>
+                    <li>Immediately it switches to an <strong>error state</strong>, claiming GitHub is not connected.</li>
+                </ul>
+            </li>
+            <li>Now check <strong>Profile Integrity Score</strong>.</li>
+            <li>You will see GitHub listed as <strong>successfully connected</strong>.</li>
+            <li>The profile completion process remains blocked.</li>
+        </ol>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="card">
+        <h2>Screenshots</h2>
+        <p>Add your screenshots in the below gallery paths.</p>
+
+        <div class="gallery">
+            <img src="github-connected.png" onclick="openOverlay(this.src)">
+            <img src="github-connection-error-on-continue.png" onclick="openOverlay(this.src)">
+            <img src="github-connection-verified1.png" onclick="openOverlay(this.src)">
+            <img src="github-connection-verified2.png" onclick="openOverlay(this.src)">
+        </div>
+    </div>
+
+
+    <!-- VIDEO -->
+    <div class="card">
+        <h2>Recorded Video Demonstration</h2>
+
+        <div class="video-wrapper">
+            <video controls playsinline muted preload="metadata">
+                <source src="User Profile - HackQuest - Google Chrome 2025-12-12 23-27-27.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+</div>
+
+<!-- FULLSCREEN IMAGE OVERLAY -->
+<div id="imgOverlay" onclick="closeOverlay()">
+    <span id="closeOverlay">&times;</span>
+    <img id="overlayImg" src="" />
+</div>
+
+<script>
+    function openOverlay(src) {
+        document.getElementById("imgOverlay").style.display = "flex";
+        document.getElementById("overlayImg").src = src;
+    }
+
+    function closeOverlay() {
+        document.getElementById("imgOverlay").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
