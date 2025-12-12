@@ -8,7 +8,7 @@ The bug affects the platform's ability to correctly validate and complete the pr
 ---
 
 ## Check live page
-
+[Live Bug Report](https://sundaralok.github.io/HackQuest-Advocate/)
 
 ---
 
