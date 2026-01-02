@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bug Report – Temporary Email Bypass on HackQuest</title>
+
+<style>
+    :root {
+        --bg-main: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        --card-bg: rgba(255,255,255,0.08);
+        --border-glow: rgba(138,43,226,0.6);
+        --primary: #b983ff;
+        --secondary: #7df9ff;
+        --text-main: #f2f2f2;
+        --text-muted: #b8b8d1;
+        --danger: #ff6b6b;
+        --success: #2ecc71;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: var(--bg-main);
+        color: var(--text-main);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 40px 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 38px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .timestamp {
+        text-align: center;
+        font-size: 15px;
+        color: var(--text-muted);
+        margin-bottom: 35px;
+    }
+
+    .page-link {
+        display: inline-block;
+        padding: 14px 26px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, var(--primary), #8e2de2);
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 0 18px rgba(185,131,255,0.45);
+        transition: 0.3s;
+    }
+
+    .page-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 28px rgba(185,131,255,0.8);
+    }
+
+    .card {
+        margin-top: 30px;
+        padding: 30px;
+        background: var(--card-bg);
+        border-radius: 18px;
+        border: 1px solid var(--border-glow);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    h2 {
+        margin-top: 0;
+        margin-bottom: 16px;
+        font-size: 24px;
+        color: var(--secondary);
+    }
+
+    p {
+        line-height: 1.7;
+        color: var(--text-main);
+        font-size: 16px;
+    }
+
+    ul, ol {
+        margin-left: 18px;
+        line-height: 1.75;
+        color: var(--text-main);
+    }
+
+    /* ---------- BADGES ---------- */
+    .badge {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-right: 10px;
+        margin-top: 8px;
+    }
+
+    .badge-high {
+        background: rgba(255,107,107,0.2);
+        color: var(--danger);
+        border: 1px solid var(--danger);
+    }
+
+    .badge-security {
+        background: rgba(125,249,255,0.15);
+        color: var(--secondary);
+        border: 1px solid var(--secondary);
+    }
+
+    .badge-auth {
+        background: rgba(185,131,255,0.2);
+        color: var(--primary);
+        border: 1px solid var(--primary);
+    }
+
+    /* ---------- GALLERY ---------- */
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .gallery img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .gallery img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(125,249,255,0.4);
+    }
+
+    /* ---------- OVERLAY ---------- */
+    #imgOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    #imgOverlay img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 14px;
+    }
+
+    #closeOverlay {
+        position: absolute;
+        top: 18px;
+        right: 28px;
+        font-size: 44px;
+        cursor: pointer;
+        color: #fff;
+    }
+
+    /* ---------- VIDEO ---------- */
+    .video-wrapper {
+        margin-top: 20px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    video {
+        width: 100%;
+        background: #000;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Bug Report – Temporary Email Detection Failure</h1>
+    <p class="timestamp"><strong>Reported On:</strong> 02/01/2026</p>
+
+    <center>
+        <a class="page-link" href="https://www.hackquest.io" target="_blank">
+            Open HackQuest Platform
+        </a>
+    </center>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <h2>Bug Summary</h2>
+        <p>
+            HackQuest currently allows users to successfully register and become verified platform users
+            using <strong>temporary / disposable email services</strong>.
+        </p>
+
+        <ul>
+            <li>The system does not block known temp-mail domains.</li>
+            <li>Accounts created using disposable emails gain full access.</li>
+            <li>No warning or restriction is applied during signup or verification.</li>
+        </ul>
+
+        <p>
+            This behavior enables users to bypass identity reliability checks,
+            potentially leading to spam, abuse, and fake user inflation.
+        </p>
+    </div>
+
+    <!-- IMPACT -->
+    <div class="card">
+        <h2>Criticality & Impact</h2>
+
+        <span class="badge badge-high">High Severity</span>
+        <span class="badge badge-security">Security / Trust Issue</span>
+        <span class="badge badge-auth">Authentication & Validation</span>
+
+        <h3 style="margin-top:25px;">Why This Is a Problem</h3>
+        <ul>
+            <li>Allows creation of multiple fake or throwaway accounts.</li>
+            <li>Weakens platform trust and referral integrity.</li>
+            <li>Can be abused for farming rewards and incentives.</li>
+            <li>Undermines user authenticity and community quality.</li>
+        </ul>
+    </div>
+
+    <!-- STEPS -->
+    <div class="card">
+        <h2>Steps to Reproduce</h2>
+        <ol>
+            <li>Open a temporary email service (e.g., disposable inbox).</li>
+            <li>Sign up on HackQuest using the temp email.</li>
+            <li>Complete email verification.</li>
+            <li>Finish onboarding and access dashboard.</li>
+            <li>Observe that the account is fully functional without restriction.</li>
+        </ol>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="card">
+        <h2>Attached Screenshots</h2>
+
+        <div class="gallery">
+            <img src="Screenshot(3750).png" onclick="openOverlay(this.src)">
+            <img src="Screenshot(3751).png" onclick="openOverlay(this.src)">
+        </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="card">
+        <h2>Video Proof</h2>
+
+        <div class="video-wrapper">
+            <video controls muted preload="metadata">
+                <source src="Web3 programming for everyone - HackQuest - Brave 2025-12-28 23-08-47.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+</div>
+
+<!-- OVERLAY -->
+<div id="imgOverlay" onclick="closeOverlay()">
+    <span id="closeOverlay">&times;</span>
+    <img id="overlayImg" src="">
+</div>
+
+<script>
+    function openOverlay(src) {
+        document.getElementById("overlayImg").src = src;
+        document.getElementById("imgOverlay").style.display = "flex";
+    }
+
+    function closeOverlay() {
+        document.getElementById("imgOverlay").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
