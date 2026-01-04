@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bug Report – GitHub Connection Status Mismatch</title>
+
+<style>
+:root{
+    --bg-main: radial-gradient(circle at top, #041b16, #020f0c);
+    --card-bg: rgba(8, 40, 30, 0.75);
+    --green-main: #22c55e;
+    --green-soft: rgba(34,197,94,0.18);
+    --green-bright: #4ade80;
+    --warning: #facc15;
+    --error: #ef4444;
+    --text-main: #e5fdf3;
+    --text-muted: #9fdac4;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    font-family: "Inter","Segoe UI",sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+.container{
+    max-width:1150px;
+    margin:auto;
+    padding:50px 20px;
+}
+
+h1{
+    text-align:center;
+    font-size:38px;
+    font-weight:800;
+    margin-bottom:8px;
+    color: var(--green-bright);
+}
+
+.subtitle{
+    text-align:center;
+    color:var(--text-muted);
+    margin-bottom:40px;
+}
+
+.card{
+    background: var(--card-bg);
+    border-radius:20px;
+    padding:32px;
+    margin-bottom:30px;
+    border:1px solid rgba(34,197,94,0.25);
+    backdrop-filter: blur(12px);
+    box-shadow:0 20px 45px rgba(0,0,0,0.6);
+}
+
+h2{
+    margin-top:0;
+    color: var(--green-main);
+}
+
+p{
+    line-height:1.75;
+    font-size:16px;
+}
+
+ul,ol{
+    line-height:1.8;
+}
+
+/* BADGES */
+.badge{
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    margin:6px 10px 6px 0;
+}
+
+.badge-error{
+    background: rgba(239,68,68,0.2);
+    color: var(--error);
+    border:1px solid var(--error);
+}
+
+.badge-ui{
+    background: var(--green-soft);
+    color: var(--green-main);
+    border:1px solid var(--green-main);
+}
+
+.badge-sync{
+    background: rgba(250,204,21,0.2);
+    color: var(--warning);
+    border:1px solid var(--warning);
+}
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse: collapse;
+    margin-top:18px;
+}
+
+th,td{
+    padding:15px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    text-align:left;
+}
+
+th{
+    color: var(--green-bright);
+    font-weight:600;
+}
+
+/* GALLERY */
+.gallery{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
+    margin-top:22px;
+}
+
+.gallery img{
+    width:100%;
+    height:270px;
+    object-fit:cover;
+    border-radius:16px;
+    cursor:pointer;
+    border:1px solid rgba(34,197,94,0.3);
+    transition:.35s ease;
+}
+
+.gallery img:hover{
+    transform: scale(1.05);
+    box-shadow:0 0 30px rgba(34,197,94,0.45);
+}
+
+/* OVERLAY */
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+#overlay img{
+    max-width:92%;
+    max-height:92%;
+    border-radius:16px;
+}
+
+#close{
+    position:absolute;
+    top:22px;
+    right:34px;
+    font-size:42px;
+    color: var(--green-bright);
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>GitHub Connection Status Bug</h1>
+<p class="subtitle"><strong>Reported On:</strong> 04/01/2026</p>
+
+<!-- SUMMARY -->
+<div class="card">
+<h2>Bug Summary</h2>
+<p>
+There is an inconsistency in how the platform displays the
+<strong>GitHub connection status</strong> across different sections of the profile.
+</p>
+
+<ul>
+<li><strong>Complete Profile</strong> section shows GitHub as <strong>Not Connected</strong></li>
+<li><strong>Social Links</strong> correctly shows GitHub as <strong>Connected</strong></li>
+<li><strong>Developer Activity</strong> displays commits from the connected GitHub account</li>
+</ul>
+</div>
+
+<!-- OBSERVED BEHAVIOR -->
+<div class="card">
+<h2>Observed Behavior</h2>
+
+<span class="badge badge-error">Status Mismatch</span>
+<span class="badge badge-ui">UI Issue</span>
+<span class="badge badge-sync">Sync Problem</span>
+
+<table>
+<tr>
+<th>Section</th>
+<th>Displayed Status</th>
+<th>Actual State</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>Complete Profile</td>
+<td>Not Connected</td>
+<td>Connected</td>
+<td style="color:var(--error)">Incorrect</td>
+</tr>
+<tr>
+<td>Social Links</td>
+<td>Connected</td>
+<td>Connected</td>
+<td style="color:var(--green-main)">Correct</td>
+</tr>
+<tr>
+<td>Developer Activity</td>
+<td>Commits Visible</td>
+<td>Commits Fetched</td>
+<td style="color:var(--green-main)">Correct</td>
+</tr>
+</table>
+</div>
+
+<!-- IMPACT -->
+<div class="card">
+<h2>Impact</h2>
+<ul>
+<li>Misleading profile completion status</li>
+<li>User confusion regarding GitHub integration</li>
+<li>Repeated reconnection attempts despite valid auth</li>
+</ul>
+
+<p>
+This strongly indicates a frontend or profile-completion flag
+not updating correctly after successful GitHub authentication.
+</p>
+</div>
+
+<!-- STEPS -->
+<div class="card">
+<h2>Steps to Reproduce</h2>
+<ol>
+<li>Connect a GitHub account successfully.</li>
+<li>Verify GitHub appears under <strong>Social Links</strong>.</li>
+<li>Open the <strong>Complete Profile</strong> section.</li>
+<li>Observe GitHub marked as <strong>Not Connected</strong>.</li>
+<li>Check <strong>Developer Activity</strong> for commit data.</li>
+</ol>
+</div>
+
+<!-- SCREENSHOTS -->
+<div class="card">
+<h2>Attached Evidence</h2>
+<div class="gallery">
+<img src="GitHub-Connection1.png" onclick="openImg(this.src)">
+<img src="GitHub-Connection2.png" onclick="openImg(this.src)">
+<img src="GitHub-Connection3.png" onclick="openImg(this.src)">
+</div>
+</div>
+
+</div>
+
+<!-- IMAGE OVERLAY -->
+<div id="overlay" onclick="closeImg()">
+<span id="close">&times;</span>
+<img id="overlayImg">
+</div>
+
+<script>
+function openImg(src){
+    document.getElementById("overlayImg").src = src;
+    document.getElementById("overlay").style.display="flex";
+}
+function closeImg(){
+    document.getElementById("overlay").style.display="none";
+}
+</script>
+
+</body>
+</html>
