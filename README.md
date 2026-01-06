@@ -24,6 +24,12 @@ This creates a **state mismatch** where the system partially recognizes the inte
 
 <br>
 
+
+**Severity:** Medium  
+**Category:** UI / Integration / State Synchronization
+
+<br>
+
 ## 🧩 Steps to Reproduce
 
 1. Connect a GitHub account successfully
@@ -83,7 +89,3 @@ To view the complete interactive bug report:
   - Profile Completion
   - Developer Activity
 
----
-
-**Severity:** Medium  
-**Category:** UI / Integration / State Synchronization
