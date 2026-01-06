@@ -167,6 +167,18 @@ th{
     color: var(--green-bright);
     cursor:pointer;
 }
+  /* ---------- VIDEO SECTION ---------- */
+    .video-wrapper {
+        margin-top: 18px;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+    }
+
+    video {
+        width: 100%;
+        border-radius: 14px;
+    }
 </style>
 </head>
 
@@ -175,7 +187,7 @@ th{
 <div class="container">
 
 <h1>GitHub Connection Status Bug</h1>
-<p class="subtitle"><strong>Reported On:</strong> 04/01/2026</p>
+<p class="subtitle"><strong>Reported On:</strong> 06/01/2026</p>
 
 <!-- SUMMARY -->
 <div class="card">
@@ -264,6 +276,17 @@ not updating correctly after successful GitHub authentication.
 <img src="Screenshot(3801).png" onclick="openImg(this.src)">
 </div>
 </div>
+
+<!-- VIDEO -->
+    <div class="card">
+        <h2>Recorded Video Demonstration</h2>
+
+        <div class="video-wrapper">
+            <video controls playsinline muted preload="metadata">
+                <source src="User Profile - HackQuest - Personal - Microsoft​ Edge 2026-01-06 21-41-13.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
 
 </div>
 
