@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bug Report – Daily Streak Reward Mismatch</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+    --bg-main: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+    --card-bg: rgba(255,255,255,0.06);
+    --accent: #00e5ff;
+    --warning: #ffb703;
+    --error: #ff6f61;
+    --success: #2dd4bf;
+    --text-main: #eaf6f6;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    font-family:"Inter","Segoe UI",sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px 20px 40px;
+}
+
+h1{
+    text-align:center;
+    font-size:36px;
+    color: var(--accent);
+    margin-bottom: 60px;
+}
+
+.card{
+    background: var(--card-bg);
+    border-radius:18px;
+    padding:30px;
+    margin-bottom:28px;
+    border:1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+}
+
+h2{ color: var(--accent); }
+
+.summary-flex{
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+    justify-content:space-between;
+}
+
+.summary-text{ flex:1; min-width:300px; }
+.summary-chart{ flex:1; min-width:300px; max-width:350px; }
+
+table{
+    width:100%;
+    border-collapse: collapse;
+    margin-top:20px;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid rgba(255,255,255,0.15);
+    text-align:center;
+}
+
+th{ color: var(--accent); }
+
+.thumb{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:8px;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+.status-correct{ color:var(--success); font-weight:600; }
+.status-incorrect{ color:var(--error); font-weight:600; }
+
+video{
+    width:100%;
+    max-height:620px;
+    border-radius:12px;
+    margin-top:15px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+#overlay img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:14px;
+}
+
+#close{
+    position:absolute;
+    top:20px;
+    right:30px;
+    font-size:42px;
+    cursor:pointer;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Daily Streak Reward Bug</h1>
+
+<!-- BUG SUMMARY -->
+<div class="card">
+<h2>Bug Summary</h2>
+
+<div class="summary-flex">
+
+  <div class="summary-text">
+    <p>
+    When claiming the <strong>Daily Streak reward</strong>, credited points are inconsistent.
+    </p>
+
+    <ul>
+    <li>Displayed reward: <strong>10 points</strong></li>
+    <li>Actual added: <strong>5, 10, 15, 20 or other</strong></li>
+    <li>Non-deterministic backend behavior observed</li>
+    </ul>
+
+    <p><strong>Total Streaks Tested:</strong> <span id="totalCount">0</span></p>
+
+    <!-- ANALYSIS RESULT (BRIEF) -->
+    <div style="
+        margin-top:20px;
+        padding:18px;
+        border-radius:12px;
+        background:rgba(0,0,0,0.25);
+        border:1px solid rgba(255,255,255,0.12);
+    ">
+
+    <h3 style="color:#00e5ff; margin-top:0;">Analysis Result</h3>
+
+    <p style="line-height:1.6;">
+
+    <strong>Observed Reward Pattern:</strong><br>
+    10 → 10 → 15 → 15 → 20 → 20 → 5 → repeat  
+    (Missed streak resets sequence to 10)
+
+    <br><br>
+
+    <strong>39-Day Distribution:</strong><br>
+    5 pts (5 days) | 10 pts (13 days) | 15 pts (11 days) | 20 pts (10 days)
+
+    <br><br>
+
+    <strong>Average Reward:</strong> 
+    <span style="color:#ffb703; font-weight:600;">13.33 points</span>
+
+    <br><br>
+
+    The system follows a hidden cyclical reward logic rather than the displayed fixed reward of 10 points.
+
+    </p>
+
+  </div>
+
+</div>
+
+<div class="summary-chart">
+<canvas id="rewardChart"></canvas>
+</div>
+
+</div>
+</div>
+
+<!-- OBSERVED BEHAVIOR TABLE -->
+<div class="card">
+<h2>Observed Behavior (Before vs After Evidence)</h2>
+
+<table id="dataTable">
+<thead>
+<tr>
+<th>Sr No</th>
+<th>Date</th>
+<th>Before Claim</th>
+<th>After Claim</th>
+<th>Points Added</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<!-- 🔥 REPLACE WITH YOUR 20–30 ENTRIES -->
+
+<tr>
+<td>1</td>
+<td>08-01-2026</td>
+<td><img src="assets/Screenshot (1).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (2).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>09-01-2026</td>
+<td><img src="assets/Screenshot (3).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (4).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Inorrect</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>10-01-2026</td>
+<td><img src="assets/Screenshot (5).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (6).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>11-01-2026</td>
+<td><img src="assets/Screenshot (7).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (8).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>12-01-2026</td>
+<td><img src="assets/Screenshot (9).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (10).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>13-01-2026</td>
+<td><img src="assets/Screenshot (11).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (12).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="5">5</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>14-01-2026</td>
+<td><img src="assets/Screenshot (13).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (14).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>15-01-2026</td>
+<td><img src="assets/Screenshot (15).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (16).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>17-01-2026</td>
+<td><img src="assets/Screenshot (17).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (18).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>18-01-2026</td>
+<td><img src="assets/Screenshot (19).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (20).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>19-01-2026</td>
+<td><img src="assets/Screenshot (21).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (22).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>20-01-2026</td>
+<td><img src="assets/Screenshot (23).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (24).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="5">5</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>21-01-2026</td>
+<td><img src="assets/Screenshot (25).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (26).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>14</td>
+<td>22-01-2026</td>
+<td><img src="assets/Screenshot (27).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (28).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>15</td>
+<td>23-01-2026</td>
+<td><img src="assets/Screenshot (29).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (30).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>16</td>
+<td>24-01-2026</td>
+<td><img src="assets/Screenshot (31).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (32).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>17</td>
+<td>25-01-2026</td>
+<td><img src="assets/Screenshot (33).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (34).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>18</td>
+<td>26-01-2026</td>
+<td><img src="assets/Screenshot (35).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (36).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>19</td>
+<td>27-01-2026</td>
+<td><img src="assets/Screenshot (37).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (38).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="5">5</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>20</td>
+<td>28-01-2026</td>
+<td><img src="assets/Screenshot (39).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (40).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>21</td>
+<td>29-01-2026</td>
+<td><img src="assets/Screenshot (41).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (42).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>22</td>
+<td>30-01-2026</td>
+<td><img src="assets/Screenshot (43).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (44).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>23</td>
+<td>31-01-2026</td>
+<td><img src="assets/Screenshot (45).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (46).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>24</td>
+<td>01-02-2026</td>
+<td><img src="assets/Screenshot (47).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (48).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>25</td>
+<td>02-02-2026</td>
+<td><img src="assets/Screenshot (49).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (50).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>26</td>
+<td>03-02-2026</td>
+<td><img src="assets/Screenshot (51).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (52).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="5">5</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>27</td>
+<td>04-02-2026</td>
+<td><img src="assets/Screenshot (53).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (54).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>28</td>
+<td>05-02-2026</td>
+<td><img src="assets/Screenshot (55).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (56).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>29</td>
+<td>06-02-2026</td>
+<td><img src="assets/Screenshot (57).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (58).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>30</td>
+<td>08-02-2026</td>
+<td><img src="assets/Screenshot (59).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (60).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>31</td>
+<td>09-02-2026</td>
+<td><img src="assets/Screenshot (61).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (62).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>32</td>
+<td>10-02-2026</td>
+<td><img src="assets/Screenshot (63).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (64).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>33</td>
+<td>12-02-2026</td>
+<td><img src="assets/Screenshot (67).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (68).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>34</td>
+<td>13-02-2026</td>
+<td><img src="assets/Screenshot (69).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (70).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="20">20</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>35</td>
+<td>14-02-2026</td>
+<td><img src="assets/Screenshot (71).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (72).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="5">5</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>36</td>
+<td>15-02-2026</td>
+<td><img src="assets/Screenshot (73).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (74).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>37</td>
+<td>16-02-2026</td>
+<td><img src="assets/Screenshot (75).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (76).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="10">10</td>
+<td class="status-correct">Correct</td>
+</tr>
+
+<tr>
+<td>38</td>
+<td>17-02-2026</td>
+<td><img src="assets/Screenshot (77).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (78).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+<tr>
+<td>39</td>
+<td>18-02-2026</td>
+<td><img src="assets/Screenshot (79).png" class="thumb" onclick="openImg(this.src)"></td>
+<td><img src="assets/Screenshot (80).png" class="thumb" onclick="openImg(this.src)"></td>
+<td data-points="15">15</td>
+<td class="status-incorrect">Incorrect</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<!-- VIDEO SECTION -->
+<div class="card">
+<h2>Attached Evidence Video (19-02-2026)</h2>
+<p>Live screen recording demonstrating point balance before and after claiming the streak reward.</p>
+<strong style="font-weight:700; font-size: larger;">Reward earned:</strong>
+<span style="color:#ffb703; font-weight:700; font-size: larger;">20 points</span>
+
+<video controls>
+<source src="evidence video of streak on 19-02-2026.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+</div>
+
+</div>
+
+<!-- IMAGE OVERLAY -->
+<div id="overlay" onclick="closeImg()">
+<span id="close">&times;</span>
+<img id="overlayImg">
+</div>
+
+<script>
+function openImg(src){
+    document.getElementById("overlayImg").src = src;
+    document.getElementById("overlay").style.display="flex";
+}
+function closeImg(){
+    document.getElementById("overlay").style.display="none";
+}
+
+/* AUTO PIE CHART */
+
+function generateChart(){
+
+    let rows = document.querySelectorAll("#dataTable tbody tr");
+
+    let counts = {
+        "5":0,
+        "10":0,
+        "15":0,
+        "20":0,
+        "Other":0
+    };
+
+    rows.forEach(row=>{
+        let value = row.querySelector("[data-points]").getAttribute("data-points");
+
+        if(counts.hasOwnProperty(value)){
+            counts[value]++;
+        } else {
+            counts["Other"]++;
+        }
+    });
+
+    let total = rows.length;
+    document.getElementById("totalCount").innerText = total;
+
+    new Chart(document.getElementById("rewardChart"), {
+        type:'pie',
+        data:{
+            labels:[
+                `5 pts (${counts["5"]})`,
+                `10 pts (${counts["10"]})`,
+                `15 pts (${counts["15"]})`,
+                `20 pts (${counts["20"]})`,
+                `Other (${counts["Other"]})`
+            ],
+            datasets:[{
+                data:[
+                    counts["5"],
+                    counts["10"],
+                    counts["15"],
+                    counts["20"],
+                    counts["Other"]
+                ],
+                backgroundColor:[
+                    "#0e11e9",
+                    "#00c70a",
+                    "#ff6c09",
+                    "#f30742",
+                    "#5700e4"
+                ]
+            }]
+        },
+        options:{
+            plugins:{
+                legend:{
+                    labels:{ color:"white" }
+                }
+            }
+        }
+    });
+}
+
+generateChart();
+</script>
+</body>
+</html>
