@@ -1,8 +1,14 @@
 # Daily Streak Reward Bug Report
 
-## Webpage Live Link
+---
 
-[See Full Bug Report](https://sundaralok.github.io/HackQuest-Advocate/)
+## 🚀 Live Report
+
+View the full interactive bug report here:
+
+👉 **Live Link:** [See Full Bug Report](https://sundaralok.github.io/HackQuest-Advocate/)
+
+---
 
 ## 🔍 Overview
 
@@ -41,15 +47,6 @@ This contradicts the displayed fixed reward of 10 points.
 - 39-day structured data table
 - Automatic statistical pie chart visualization
 - Screen recording demonstration
-
----
-
-## 🚀 Live Report
-
-View the full interactive bug report here:
-
-👉 **Live Link:**  
-`YOUR_LIVE_LINK_HERE`
 
 ---
 
