@@ -176,7 +176,68 @@ video{
 
     <br><br>
 
-    The system follows a hidden cyclical reward logic rather than the displayed fixed reward of 10 points.
+    <div style="
+        margin-top:25px;
+        border:1.5px solid rgba(255,255,255,0.25);
+        border-radius:14px;
+        overflow:hidden;
+    ">
+
+    <table style="margin:0;">
+
+    <!-- Full Width Heading -->
+    <tr style="background:rgba(0,0,0,0.25);">
+        <th colspan="2" style="
+            padding:16px;
+            font-size:18px;
+            color:white;
+            letter-spacing:0.5px;
+        ">
+        Average Weekly Reward if Streak Is Not Broken
+        </th>
+    </tr>
+
+    <!-- Column Headers -->
+    <tr style="background:rgba(34, 34, 34, 0.25);">
+        <th style="padding:12px;">Expected</th>
+        <th style="padding:12px;">Outcome</th>
+    </tr>
+
+    <!-- Values -->
+    <tr>
+        <td style="
+            padding:18px;
+            font-size:20px;
+            font-weight:700;
+            color:rgb(0, 223, 0);
+        ">
+        70
+        </td>
+        <td style="
+            padding:18px;
+            font-size:20px;
+            font-weight:700;
+            color:rgb(255, 14, 86);
+        ">
+        95
+        </td>
+    </tr>
+
+    </table>
+    </div>
+
+    <br><br>
+
+        <div style="
+        margin-top:18px;
+        padding:14px 18px;
+        border-left:4px solid var(--accent);
+        background:rgba(0,229,255,0.08);
+        border-radius:8px;
+        font-weight:600;
+        ">
+        The system follows a hidden cyclical reward logic rather than the displayed fixed reward of 10 points.
+        </div>
 
     </p>
 
@@ -185,7 +246,23 @@ video{
 </div>
 
 <div class="summary-chart">
+
+     <!-- PIE CHART HEADING -->
+  <h3 style="color:var(--accent); margin-bottom:15px; text-align:center;">
+    Reward Distribution (Observed 39-Day Data)
+  </h3>
+
 <canvas id="rewardChart"></canvas>
+
+<br>
+<br>
+
+<div style="margin-top:60px;">
+  <h3 style="color:var(--accent); margin-bottom:15px; text-align:center;">
+    Average Weekly Reward if Streak Is Not Broken
+  </h3>
+  <canvas id="weeklyComparisonChart"></canvas>
+</div>
 </div>
 
 </div>
@@ -659,6 +736,54 @@ function generateChart(){
             }
         }
     });
+
+   /* WEEKLY COMPARISON BAR CHART */
+
+    new Chart(document.getElementById("weeklyComparisonChart"), {
+        type: 'bar',
+        data: {
+            labels: ["Weekly Reward Comparison"],
+            datasets: [
+                {
+                    label: "Expected (7 × 10 pts)",
+                    data: [70],
+                    backgroundColor: "#00c70a",
+                    borderColor: "white",
+                    borderWidth: 1.5,
+                    borderRadius: 10
+                },
+                {
+                    label: "Actual (Observed Pattern)",
+                    data: [95],
+                    backgroundColor: "#ff6c09",
+                    borderColor: "white",
+                    borderWidth: 1.5,
+                    borderRadius: 10
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: { color: "white" }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: "white" },
+                    grid: { color: "rgba(255,255,255,0.1)" }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: "white" },
+                    grid: { color: "rgba(255,255,255,0.1)" }
+                }
+            }
+        }
+    });
+
 }
 
 generateChart();
