@@ -1,5 +1,8 @@
 # 🐞 Quest Progress Not Updating
 
+## Live page
+Click here: [See Full Bug Report](https://sundaralok.github.io/HackQuest-Advocate/Bugs/India_Quack_Believers_Community/2.%20Quest%20Progress%20Counter%20Not%20Updating)
+
 ## Overview
 
 This report documents an issue within the **HackQuest – Community Quests module** where quest progress counters fail to update after successfully claiming completed quests.
