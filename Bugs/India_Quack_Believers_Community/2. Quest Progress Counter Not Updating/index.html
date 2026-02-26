@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bug Report - Quest Progress Not Updating</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Fullscreen modal for images */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <header class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black p-8 shadow-xl rounded-b-xl relative overflow-hidden text-center">
+  <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-lg">
+    🐞 Bug Report: Quest Progress Not Updating
+  </h1>
+  <p class="text-lg md:text-xl text-gray-900 drop-shadow-sm">
+    Platform: <a href="https://www.hackquest.io/"> <span class="font-semibold"> HackQuest </span> </a> | Module: <a href="https://www.hackquest.io/my-community/HackQuest/India-Quack-Believers/mission"><span class="font-semibold"> Community Quests </span></a>
+  </p>
+  <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-200 rounded-full opacity-30 animate-pulse"></div>
+  <div class="absolute bottom-0 left-0 w-60 h-60 bg-yellow-300 rounded-full opacity-20 animate-pulse"></div>
+</header>
+
+  <main class="max-w-6xl mx-auto p-6 space-y-10 mt-10">
+
+    <!-- Summary -->
+    <section class="bg-white shadow-lg rounded-2xl p-6 border-l-4 border-green-500 mt-10">
+      <h2 class="text-2xl font-semibold mb-4">Issue Summary</h2>
+      <p>
+        Even after successfully submitting and claiming quests, the progress counters
+        (e.g., <strong>0/3</strong>, <strong>0/9</strong>) do not update.
+        The UI continues to show zero completed quests despite missions being marked as <span class="text-green-600 font-bold text-[16.5px]">"Claimed"</span>.
+      </p>
+    </section>
+
+    <!-- Frontend Perspective -->
+    <section class="bg-white shadow-lg rounded-2xl p-6 border-l-4 border-blue-500">
+      <h2 class="text-2xl font-semibold mb-4">Frontend Perspective</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>UI shows mission status as <span class="text-green-600 font-semibold">Claimed</span>.</li>
+        <li>Progress counter remains <strong>0/3</strong> instead of updating.</li>
+        <li>Possible state not refreshed after claim action.</li>
+        <li>React/Vue state or API response may not be updating progress field.</li>
+        <li>Potential caching issue or missing re-render trigger.</li>
+      </ul>
+    </section>
+
+    <!-- Backend Perspective -->
+    <section class="bg-white shadow-lg rounded-2xl p-6 border-l-4 border-yellow-500">
+      <h2 class="text-2xl font-semibold mb-4">Backend Perspective</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Database may not be incrementing completed quest count.</li>
+        <li>Progress API may be returning stale or incorrect value.</li>
+        <li>Claim endpoint may update status but not aggregated progress.</li>
+        <li>Possible race condition between claim and progress summary calculation.</li>
+      </ul>
+    </section>
+
+    <!-- User Experience Impact -->
+    <section class="bg-white shadow-lg rounded-2xl p-6 border-l-4 border-orange-500">
+      <h2 class="text-2xl font-semibold mb-4">User Experience Impact</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Reduces user confidence in the reliability of the platform's progress tracking and logic.</li>
+        <li>Creates perception of poor frontend/backend logic flow, undermining trust in the system.</li>
+        <li>May cause confusion about how progress and completion are tracked, even if scoring is accurate.</li>
+      </ul>
+    </section>
+
+    <!-- Proof Section -->
+    <section class="bg-white shadow-lg rounded-2xl p-6 border-l-4 border-purple-500">
+      <h2 class="text-2xl font-semibold mb-6">Proof (Screenshots)</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <img src="first_ss.png" alt="Screenshot 1" class="rounded-xl shadow-md border cursor-pointer" onclick="openModal(this.src)">
+          <p class="text-sm mt-2 text-center text-gray-600">Screenshot 1: Priority Quests showing 0/3</p>
+        </div>
+
+        <div>
+          <img src="second_ss.png" alt="Screenshot 2" class="rounded-xl shadow-md border cursor-pointer" onclick="openModal(this.src)">
+          <p class="text-sm mt-2 text-center text-gray-600">Screenshot 2: Onboarding Quest showing claimed but 0/3</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps to Reproduce -->
+    <section class="bg-white shadow-lg rounded-2xl p-6 border-l-4 border-pink-500">
+      <h2 class="text-2xl font-semibold mb-4">Steps to Reproduce</h2>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li>Login to HackQuest.</li>
+        <li>Navigate to My Community → Quest tab.</li>
+        <li>Complete and claim any onboarding or priority quest.</li>
+        <li>Observe the progress counter (0/3 or 0/9).</li>
+      </ol>
+    </section>
+
+    <!-- Expected vs Actual -->
+    <section class="bg-white shadow-lg rounded-2xl p-6">
+      <h2 class="text-2xl font-semibold mb-6">Expected vs Actual</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-green-50 p-4 rounded-xl border border-green-400">
+          <h3 class="font-semibold text-green-700">Expected</h3>
+          <p>Progress counter updates dynamically (e.g., 1/3, 2/3).</p>
+        </div>
+
+        <div class="bg-red-50 p-4 rounded-xl border border-red-400">
+          <h3 class="font-semibold text-red-700">Actual</h3>
+          <p>Progress remains at 0 despite completed and claimed missions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Proof Section -->
+    <section class="bg-white shadow-lg rounded-2xl p-6">
+      <h2 class="text-2xl font-semibold mb-6">Proof (Video)</h2>
+      <p class="text-xl text-center">Video showing quests being claimed but progress counter not updating.</p>
+      <br>
+      <div class="aspect-video">
+        <video controls class="rounded-xl shadow-md border w-full h-full">
+          <source src="video-showing-bug.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <span class="close-btn" onclick="closeModal(event)">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <footer class="bg-gray-900 text-white text-center p-4 mt-10 rounded-t-lg">
+    Bug Report Prepared for HackQuest Technical Team | 2026
+  </footer>
+
+  <script>
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("modalImg");
+
+    function openModal(src) {
+      modal.style.display = "flex";
+      modalImg.src = src;
+    }
+
+    function closeModal(event) {
+      event.stopPropagation();
+      modal.style.display = "none";
+    }
+
+    // Close when clicking outside image
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>
