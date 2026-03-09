@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Security Report | GitHub Commit Count Mismatch</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+background:#0f172a;
+color:#e5e7eb;
+line-height:1.6;
+}
+
+header{
+background:#020617;
+padding:30px;
+border-bottom:1px solid #1f2937;
+text-align:center;
+}
+
+header h1{
+color:#22c55e;
+font-size:32px;
+margin-bottom:8px;
+}
+
+header p{
+color:#9ca3af;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+}
+
+.card{
+background:#020617;
+border:1px solid #1f2937;
+border-radius:12px;
+padding:28px;
+margin-bottom:28px;
+}
+
+.card h2{
+color:#22c55e;
+margin-bottom:15px;
+}
+
+.card h3{
+margin-top:18px;
+margin-bottom:8px;
+color:#38bdf8;
+}
+
+ul, ol{
+margin-left:25px;
+}
+
+li{
+margin:8px 0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+table th, table td{
+border:1px solid #1f2937;
+padding:12px;
+text-align:left;
+}
+
+table th{
+background:#111827;
+}
+
+img{
+width:100%;
+border-radius:10px;
+margin-top:12px;
+border:1px solid #1f2937;
+}
+
+code{
+background:#111827;
+padding:4px 8px;
+border-radius:6px;
+color:#facc15;
+}
+
+.highlight{
+color:#facc15;
+font-weight:600;
+}
+
+.video{
+margin-top:20px;
+}
+
+video{
+width:100%;
+border-radius:10px;
+border:1px solid #1f2937;
+}
+
+.footer{
+text-align:center;
+padding:30px;
+color:#9ca3af;
+font-size:14px;
+border-top:1px solid #1f2937;
+margin-top:40px;
+}
+
+.badge{
+display:inline-block;
+padding:4px 10px;
+border-radius:6px;
+font-size:13px;
+margin-right:6px;
+}
+
+.severity{
+background:#dc2626;
+}
+
+.medium{
+background:#df8d00;
+}
+
+.info{
+background:#2563eb;
+}
+
+a{
+  text-decoration: none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Bug Report</h1>
+<p>GitHub Integration Commit Count Mismatch</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Report Overview</h2>
+
+<table>
+
+<tr>
+<th>Title</th>
+<td>GitHub Commit Count Mismatch</td>
+</tr>
+
+<tr>
+<th>Platform</th>
+<td>HackQuest  <a href="https://www.hackquest.io/">🔗</a></td>
+</tr>
+
+<tr>
+<th>Severity</th>
+<td><span class="badge medium">Medium</span></td>
+</tr>
+
+<tr>
+<th>Impact</th>
+<td>Incorrect developer activity statistics</td>
+</tr>
+
+<tr>
+<th>Status</th>
+<td>Unresolved</td>
+</tr>
+
+</table>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Bug Summary</h2>
+
+<p>
+
+After connecting the GitHub account with the platform, the commit statistics displayed by the dashboard do not match the commits shown on GitHub.
+
+</p>
+
+<p>
+
+GitHub contribution graph shows:
+
+</p>
+
+<ul>
+
+<li>2025 commits: <span class="highlight">88</span></li>
+<li>2026 commits: <span class="highlight">44</span></li>
+<li>Total commits: <span class="highlight">132</span></li>
+
+</ul>
+
+<p>
+
+However, the platform displays only:
+
+</p>
+
+<p class="highlight">119 commits</p>
+
+<p>
+
+This indicates that <span class="highlight">13 commits are missing</span>.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Evidence</h2>
+
+<h3>GitHub Contribution Graph (2026)</h3>
+
+<img src="Screenshot (4168).png">
+
+<h3>GitHub Contribution Graph (2025)</h3>
+
+<img src="Screenshot (4169).png">
+
+<h3>Platform Developer Activity</h3>
+
+<img src="Screenshot (4170).png">
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Expected Result</h2>
+
+<p>
+
+The system should fetch all commits from GitHub and display the correct value:
+
+</p>
+
+<p class="highlight">132 commits</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Actual Result</h2>
+
+<p>
+
+The platform shows:
+
+</p>
+
+<p class="highlight">119 commits</p>
+
+<p>
+
+Meaning <b>13 commits are not counted.</b>
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Possible Root Causes</h2>
+
+<ul>
+
+<li>GitHub API pagination issue</li>
+<li>Only default branch commits counted</li>
+<li>Forked repositories excluded</li>
+<li>Time range filtering problem</li>
+<li>Caching delay in synchronization</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Steps to Reproduce</h2>
+
+<ol>
+
+<li>Login to the platform</li>
+<li>Go to profile page</li>
+<li>Connect GitHub account</li>
+<li>Open <code>Developer Activity</code> section in profile</li>
+<li>Compare commit count with GitHub</li>
+
+</ol>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Demonstration Video</h2>
+
+<p>
+
+The following video demonstrates the mismatch between GitHub and the dashboard.
+
+</p>
+
+<div class="video">
+
+<video controls>
+<source src="report_video.mp4" type="video/mp4">
+</video>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+Security report prepared for platform bug investigation
+
+</div>
+
+</body>
+
+</html>
