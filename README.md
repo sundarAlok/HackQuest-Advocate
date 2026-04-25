@@ -47,7 +47,7 @@ Visual proof is included in the interactive report:
 | `screenshot3-learning-progress.png` | Learning Progress showing completed status |
 | `bug-demonstration.mp4` | Screen recording of the discrepancy |
 
-> 💡 Open `[index.html](https://sundaralok.github.io/HackQuest-Advocate/)` in a browser to view the full interactive report with clickable image lightbox and embedded video.
+> 💡 Open [index.html](https://sundaralok.github.io/HackQuest-Advocate/) in a browser to view the full interactive report with clickable image lightbox and embedded video.
 
 ---
 
