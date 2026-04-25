@@ -73,16 +73,16 @@ Visual proof is included in the interactive report:
 
 ## 🚀 How to View This Report
 
-# Clone or download the repository
+### Clone or download the repository
 ```bash
 git clone https://github.com/sundarAlok/HackQuest-Advocate.git
 ```
-# Navigate to the report directory
+### Navigate to the report directory
 ```bash
 cd HackQuest/bug-report
 ```
 
-# Open the interactive report in your browser
+### Open the interactive report in your browser
 ```bash
 open bug-report.html          # macOS
 start bug-report.html         # Windows
