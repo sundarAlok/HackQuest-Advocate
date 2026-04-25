@@ -73,14 +73,17 @@ Visual proof is included in the interactive report:
 
 ## 🚀 How to View This Report
 
-```bash
 # Clone or download the repository
+```bash
 git clone https://github.com/sundarAlok/HackQuest-Advocate.git
-
+```
 # Navigate to the report directory
+```bash
 cd HackQuest/bug-report
+```
 
 # Open the interactive report in your browser
+```bash
 open bug-report.html          # macOS
 start bug-report.html         # Windows
 xdg-open bug-report.html      # Linux
@@ -109,5 +112,5 @@ This bug report is submitted for the purpose of improving the HackQuest platform
 
 ---
 
-> 🎯 **Goal**: Help make HackQuest more reliable and user-friendly. Your feedback drives improvement!  
->  **Contact**: Submit additional reports via the HackQuest feedback system or GitHub Issues.
+> **Goal**: Help make HackQuest more reliable and user-friendly. Your feedback drives improvement!  
+> **Contact**: Submit additional reports via the HackQuest feedback system or GitHub Issues.
