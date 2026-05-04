@@ -1,678 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bug Report - Daily Treasure Reward Error | HackQuest</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #0d9488;
-            --primary-dark: #0f766e;
-            --secondary: #f97316;
-            --secondary-dark: #ea580c;
-            --bg-gradient-start: #0f172a;
-            --bg-gradient-end: #1e293b;
-            --card-bg: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --success-bg: #dcfce7;
-            --success-border: #22c55e;
-            --success-text: #166534;
-            --error-bg: #fee2e2;
-            --error-border: #ef4444;
-            --error-text: #b91c1c;
-            --warning-bg: #fef3c7;
-            --warning-border: #f59e0b;
-            --warning-text: #92400e;
-            --info-bg: #eff6ff;
-            --info-border: #3b82f6;
-            --info-text: #1d4ed8;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-            line-height: 1.7;
-            color: var(--text-primary);
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, var(--secondary) 100%);
-            color: white;
-            padding: 45px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .header h1 {
-            font-size: 2.3em;
-            margin-bottom: 12px;
-            font-weight: 800;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .header p {
-            font-size: 1.15em;
-            opacity: 0.95;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .badges {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 22px;
-            border-radius: 50px;
-            font-size: 0.92em;
-            font-weight: 600;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.2s ease, background 0.2s ease;
-        }
-
-        .badge:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .badge.critical {
-            background: rgba(239, 68, 68, 0.3);
-            border-color: #ef4444;
-        }
-
-        .content {
-            padding: 45px 50px;
-        }
-
-        .section {
-            margin-bottom: 45px;
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section:nth-child(1) { animation-delay: 0.1s; }
-        .section:nth-child(2) { animation-delay: 0.2s; }
-        .section:nth-child(3) { animation-delay: 0.3s; }
-        .section:nth-child(4) { animation-delay: 0.4s; }
-        .section:nth-child(5) { animation-delay: 0.5s; }
-        .section:nth-child(6) { animation-delay: 0.6s; }
-        .section:nth-child(7) { animation-delay: 0.7s; }
-        .section:nth-child(8) { animation-delay: 0.8s; }
-
-        .section-title {
-            font-size: 1.6em;
-            color: var(--text-primary);
-            margin-bottom: 22px;
-            padding-bottom: 14px;
-            border-bottom: 3px solid var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-        }
-
-        .section-title::before {
-            content: '';
-            width: 10px;
-            height: 10px;
-            background: var(--secondary);
-            border-radius: 3px;
-            transform: rotate(45deg);
-            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
-        }
-
-        .bug-summary {
-            background: var(--error-bg);
-            border-left: 5px solid var(--error-border);
-            padding: 24px 28px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
-        }
-
-        .bug-summary h3 {
-            color: var(--error-text);
-            margin-bottom: 12px;
-            font-size: 1.25em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bug-summary p {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        .meta-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .severity {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #fecaca;
-            color: var(--error-text);
-            padding: 6px 18px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.88em;
-        }
-
-        .impact {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #fed7aa;
-            color: #92400e;
-            padding: 6px 18px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.88em;
-        }
-
-        .steps {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            padding: 28px;
-            border-radius: 16px;
-            border: 2px solid #e2e8f0;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
-        }
-
-        .steps ol {
-            padding-left: 24px;
-            counter-reset: step-counter;
-        }
-
-        .steps li {
-            margin-bottom: 16px;
-            color: var(--text-secondary);
-            font-size: 1.03em;
-            counter-increment: step-counter;
-            position: relative;
-            padding-left: 10px;
-        }
-
-        .steps li::marker {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.1em;
-        }
-
-        .steps li strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .steps li code {
-            background: #e2e8f0;
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 0.95em;
-            color: var(--secondary-dark);
-        }
-
-        .behavior-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .behavior-card {
-            padding: 24px;
-            border-radius: 14px;
-            border-left: 5px solid;
-        }
-
-        .behavior-card.expected {
-            background: var(--success-bg);
-            border-left-color: var(--success-border);
-        }
-
-        .behavior-card.actual {
-            background: var(--error-bg);
-            border-left-color: var(--error-border);
-        }
-
-        .behavior-card h4 {
-            margin-bottom: 12px;
-            font-size: 1.15em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .behavior-card.expected h4 {
-            color: var(--success-text);
-        }
-
-        .behavior-card.actual h4 {
-            color: var(--error-text);
-        }
-
-        .behavior-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .video-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 28px;
-        }
-
-        .video-card {
-            background: var(--info-bg);
-            border: 2px solid var(--info-border);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .video-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.25);
-        }
-
-        .video-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 16px 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            background: #000;
-        }
-
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .video-caption {
-            padding: 16px 20px;
-            background: white;
-            color: var(--text-secondary);
-            font-size: 0.95em;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .analysis {
-            background: linear-gradient(135deg, rgba(13, 148, 136, 0.08) 0%, rgba(249, 115, 22, 0.08) 100%);
-            padding: 28px;
-            border-radius: 16px;
-            border: 2px solid rgba(13, 148, 136, 0.3);
-        }
-
-        .analysis h4 {
-            color: var(--primary-dark);
-            margin-bottom: 18px;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .analysis ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .analysis li {
-            padding: 12px 0 12px 35px;
-            position: relative;
-            color: var(--text-secondary);
-            border-bottom: 1px dashed rgba(13, 148, 136, 0.2);
-        }
-
-        .analysis li:last-child {
-            border-bottom: none;
-        }
-
-        .analysis li::before {
-            content: '🔧';
-            position: absolute;
-            left: 0;
-            font-size: 1.1em;
-        }
-
-        .analysis li strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .solutions {
-            background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 100%);
-            padding: 28px;
-            border-radius: 16px;
-            border: 2px solid var(--secondary);
-        }
-
-        .solutions ol {
-            padding-left: 24px;
-            color: var(--text-secondary);
-        }
-
-        .solutions li {
-            margin-bottom: 14px;
-            padding-left: 8px;
-        }
-
-        .solutions li strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .env-details {
-            background: #f8fafc;
-            padding: 24px;
-            border-radius: 12px;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.95em;
-            border: 1px solid #e2e8f0;
-        }
-
-        .env-details p {
-            margin-bottom: 10px;
-            color: var(--text-secondary);
-        }
-
-        .env-details p:last-child {
-            margin-bottom: 0;
-        }
-
-        .env-details strong {
-            color: var(--primary-dark);
-        }
-
-        .notes {
-            background: var(--warning-bg);
-            padding: 24px;
-            border-radius: 12px;
-            border-left: 5px solid var(--warning-border);
-            color: var(--warning-text);
-        }
-
-        .notes strong {
-            color: #78350f;
-        }
-
-        @media (max-width: 900px) {
-            .behavior-grid {
-                grid-template-columns: 1fr;
-            }
-            .video-section {
-                grid-template-columns: 1fr;
-            }
-            .content {
-                padding: 35px 30px;
-            }
-            .header {
-                padding: 35px 25px;
-            }
-            .header h1 {
-                font-size: 1.9em;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 20px 12px;
-            }
-            .content {
-                padding: 30px 20px;
-            }
-            .section-title {
-                font-size: 1.4em;
-            }
-            .badges {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bug Report - Daily Treasure Reward Error | HackQuest</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.6;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+/* HEADER (UPDATED SMOOTH GRADIENT) */
+.header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.4em;
+    margin-bottom: 10px;
+}
+
+.header p {
+    opacity: 0.95;
+}
+
+.badges {
+    margin-top: 15px;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    margin: 5px;
+}
+
+/* CONTENT */
+.content {
+    padding: 40px;
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.5em;
+    color: #2d3748;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #667eea;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #667eea;
+    border-radius: 50%;
+}
+
+/* BUG SUMMARY */
+.bug-summary {
+    background: #fff5f5;
+    border-left: 4px solid #fc8181;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.bug-summary h3 {
+    color: #c53030;
+    margin-bottom: 10px;
+}
+
+/* STEPS */
+.steps {
+    background: #f7fafc;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+}
+
+.steps ol {
+    padding-left: 20px;
+}
+
+.steps li {
+    margin-bottom: 12px;
+    color: #4a5568;
+}
+
+.steps code {
+    background: #edf2f7;
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+
+/* EXPECTED VS ACTUAL */
+.behavior {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.expected {
+    background: #c6f6d5;
+    border-left: 4px solid #48bb78;
+}
+
+.actual {
+    background: #fed7d7;
+    border-left: 4px solid #f56565;
+}
+
+/* VIDEO */
+.video-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    background: black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* ANALYSIS */
+.analysis {
+    background: #ebf8ff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #90cdf4;
+}
+
+.analysis ul {
+    list-style: none;
+}
+
+.analysis li {
+    padding: 10px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.analysis li::before {
+    content: '🔍';
+    position: absolute;
+    left: 0;
+}
+
+/* SOLUTIONS */
+.solutions {
+    background: #fefcbf;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #ecc94b;
+}
+
+/* ENV */
+.env {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: monospace;
+}
+
+/* NOTES */
+.notes {
+    background: #fffaf0;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #f6ad55;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .behavior {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎁 Bug Report</h1>
-            <p>"Get Daily Treasure" Button Triggers Client-Side Error After Completing All Requirements</p>
-            <div class="badges">
-                <span class="badge critical">🔴 Severity: High</span>
-                <span class="badge">🌐 Platform: Web</span>
-                <span class="badge">📅 Date: May 2026</span>
-                <span class="badge">🎯 Feature: Daily Rewards</span>
-            </div>
-        </div>
 
-        <div class="content">
-            <!-- Bug Summary -->
-            <div class="section">
-                <h2 class="section-title">Bug Summary</h2>
-                <div class="bug-summary">
-                    <h3>⚠️ "Get Daily Treasure" Reward Button Fails with Generic Client Error</h3>
-                    <p>On the HackQuest home page, after a user successfully completes all three daily requirements (<code>claim daily streak</code>, <code>like 4 projects</code>, <code>finish 1 unit</code>), the "Get Daily Treasure" reward button becomes available. However, clicking this button triggers a generic client-side error message: <em>"Application error: a client side error has occurred (see browser console for more info)"</em>. Investigation of the browser console reveals no actionable error details, preventing users from claiming earned rewards and causing frustration.</p>
-                    <div class="meta-tags">
-                        <span class="severity">🔴 Severity: High</span>
-                        <span class="impact">💸 Impact: Revenue & Retention</span>
-                    </div>
-                </div>
-            </div>
+<div class="container">
 
-            <!-- Steps to Reproduce -->
-            <div class="section">
-                <h2 class="section-title">Steps to Reproduce</h2>
-                <div class="steps">
-                    <ol>
-                        <li><strong>Access HackQuest Home Page:</strong> Navigate to <code>https://www.hackquest.io</code> and log in to your account</li>
-                        <li><strong>Complete Daily Requirement #1:</strong> Claim your daily streak points from the streak widget</li>
-                        <li><strong>Complete Daily Requirement #2:</strong> Like exactly 4 different projects in the community feed</li>
-                        <li><strong>Complete Daily Requirement #3:</strong> Finish learning 1 complete unit in any course</li>
-                        <li><strong>Observe Reward Activation:</strong> Confirm the "Get Daily Treasure" button appears and is clickable</li>
-                        <li><strong>Trigger the Bug:</strong> Click the "Get Daily Treasure" button</li>
-                        <li><strong>Verify Error:</strong> Note the error modal: <code>"Application error: a client side error has occurred"</code></li>
-                        <li><strong>Check Console:</strong> Open browser DevTools → Console tab and observe lack of meaningful error details</li>
-                    </ol>
-                </div>
-            </div>
+<div class="header">
+<h1>🐛 Bug Report</h1>
+<p>"Get Daily Treasure" Button Triggers Client-Side Error After Completing All Requirements</p>
 
-            <!-- Expected vs Actual Behavior -->
-            <div class="section">
-                <h2 class="section-title">Expected vs Actual Behavior</h2>
-                <div class="behavior-grid">
-                    <div class="behavior-card expected">
-                        <h4>✅ Expected Behavior</h4>
-                        <p>After fulfilling all three daily conditions, clicking "Get Daily Treasure" should successfully process the reward claim, display a confirmation animation/modal, update the user's inventory or points balance, and mark the daily treasure as claimed for that day.</p>
-                    </div>
-                    <div class="behavior-card actual">
-                        <h4>❌ Actual Behavior</h4>
-                        <p>Clicking the button immediately triggers a generic error modal with the message <em>"Application error: a client side error has occurred (see browser console for more info)"</em>. The browser console shows no useful stack trace, network errors, or validation messages. The reward is not granted, and the button remains in a broken state.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Video Demonstrations -->
-            <div class="section">
-                <h2 class="section-title">Video Demonstrations</h2>
-                <div class="video-section">
-
-<div class="video-card" style="transition: 0.2s;">
-                        <div class="video-header">🎬 Video 1: Reproducing the Bug Flow</div>
-                        <div class="video-container">
-                            <video controls="" muted="" poster="https://via.placeholder.com/800x450/0f172a/ffffff?text=Video+1:+Reproduction+Flow" playsinline="">
-                                <source src="vid1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                     
-                    </div>
-                        
-                    
-                    <div class="video-card">
-                        <div class="video-header">🔍 Video 2: Reproducing the Bug Flow</div>
-                        <div class="video-container">
-                            <video controls muted poster="https://via.placeholder.com/800x450/0f172a/ffffff?text=Video+2:+DevTools+Analysis">
-                                <source src="vid2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+<div class="badges">
+<span class="badge">🔴 Severity: High</span>
+<span class="badge">🌐 Platform: Web</span>
+<span class="badge">📅 Date: May 2026</span>
+<span class="badge">🎯 Feature: Daily Rewards</span>
 </div>
-                     
-                    </div>
-                </div>
-            </div>
+</div>
 
-            <!-- Technical Analysis -->
-            <div class="section">
-                <h2 class="section-title">Potential Root Causes</h2>
-                <div class="analysis">
-                    <h4>🔍 Technical Investigation Points:</h4>
-                    <ul>
-                        <li><strong>Missing Error Handling:</strong> The reward claim API call may lack proper try/catch or error boundary handling, causing uncaught promises to bubble up as generic errors</li>
-                        <li><strong>Silent API Failure:</strong> Backend endpoint for claiming treasure might return a 5xx error or malformed response that the frontend doesn't gracefully handle</li>
-                        <li><strong>State Validation Gap:</strong> Frontend may not re-validate all three conditions client-side before submitting, causing race conditions if server state differs</li>
-                        <li><strong>Authentication Token Issue:</strong> The claim request might fail due to expired/missing auth tokens that aren't refreshed before the API call</li>
-                        <li><strong>CORS or Network Interception:</strong> Browser extensions, ad-blockers, or strict privacy settings could be intercepting the request without clear feedback</li>
-                        <li><strong>Missing Error Logging:</strong> Application may swallow errors intentionally for UX but fail to log them to monitoring services (Sentry, LogRocket, etc.)</li>
-                        <li><strong>Dependency Version Conflict:</strong> Recent updates to reward logic dependencies (e.g., web3 libraries, state management) may introduce silent failures</li>
-                    </ul>
-                </div>
-            </div>
+<div class="content">
 
-            <!-- Recommended Solutions -->
-            <div class="section">
-                <h2 class="section-title">Recommended Solutions</h2>
-                <div class="solutions">
-                    <ol>
-                        <li><strong>Implement Structured Error Handling:</strong> Wrap the treasure claim function in comprehensive try/catch blocks with specific error messages for different failure modes</li>
-                        <li><strong>Add Client-Side Pre-Validation:</strong> Before submitting the claim, re-check all three conditions against the latest user state to prevent invalid requests</li>
-                        <li><strong>Enhance Error Logging:</strong> Integrate with error monitoring tools to capture full stack traces, user context, and request payloads when errors occur</li>
-                        <li><strong>Improve User Feedback:</strong> Replace generic error modals with actionable messages (e.g., "Reward claim failed. Please try again or contact support if the issue persists")</li>
-                        <li><strong>Add Retry Logic:</strong> Implement exponential backoff retry for transient network failures with clear loading states</li>
-                        <li><strong>Backend Health Check:</strong> Add a pre-flight endpoint to verify reward system availability before enabling the claim button</li>
-                        <li><strong>QA Test Coverage:</strong> Add E2E tests covering the full daily reward flow, including edge cases like partial completion and network interruptions</li>
-                    </ol>
-                </div>
-            </div>
+<!-- SUMMARY -->
+<div class="section">
+<h2 class="section-title">Bug Summary</h2>
 
-            <!-- Environment Details -->
-            <div class="section">
-                <h2 class="section-title">Environment Details</h2>
-                <div class="env-details">
-                    <p><strong>URL:</strong> https://www.hackquest.io (Home Page)</p>
-                    <p><strong>Browser:</strong> Chrome 124+, Firefox 125+, Edge 124+ (Chromium)</p>
-                    <p><strong>OS:</strong> Windows 10/11, macOS Sonoma, Ubuntu 22.04</p>
-                    <p><strong>Screen:</strong> 1920×1080, 1366×768, Retina displays</p>
-                    <p><strong>Network:</strong> Tested on broadband (50+ Mbps) and mobile 4G</p>
-                    <p><strong>Account State:</strong> Authenticated user with active streak, project likes, and completed unit</p>
-                    <p><strong>Console Output:</strong> No actionable errors; only generic React/Next.js error boundary message</p>
-                </div>
-            </div>
+<div class="bug-summary">
+<h3>"Get Daily Treasure" Reward Button Fails with Generic Client Error</h3>
 
-            <!-- Additional Notes -->
-            <div class="section">
-                <h2 class="section-title">Additional Notes</h2>
-                <div class="notes">
-                    <p><strong>⚠️ Business Impact:</strong> This bug directly affects user retention and engagement. Daily rewards are a core gamification mechanic—failure to claim earned rewards erodes trust and may cause users to abandon daily participation. Additionally, if the treasure includes tokens or NFTs, this represents a potential revenue loss. The lack of console visibility significantly increases debugging time and delays resolution.</p>
-                    <p style="margin-top: 12px;"><strong>💡 Quick Mitigation:</strong> As a temporary workaround, consider adding a "Report Issue" button in the error modal that auto-collects user context and sends a structured report to support/engineering.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<p>On the HackQuest home page, after completing all required daily tasks, clicking the reward button triggers a generic client-side error without any useful debugging information.</p>
+</div>
+</div>
 
-    <script>
-        // Enhance video controls: ensure muted & autoplay-friendly defaults
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('video').forEach(video => {
-                video.muted = true;
-                video.defaultMuted = true;
-                video.playsInline = true;
-            });
-        });
+<!-- STEPS -->
+<div class="section">
+<h2 class="section-title">Steps to Reproduce</h2>
 
-        // Add subtle hover effects to interactive elements
-        document.querySelectorAll('.badge, .behavior-card, .video-card').forEach(el => {
-            el.addEventListener('mouseenter', function() {
-                this.style.transition = 'all 0.2s ease';
-            });
-        });
-    </script>
+<div class="steps">
+<ol>
+<li>Open HackQuest and login</li>
+<li>Claim daily streak</li>
+<li>Like 4 projects</li>
+<li>Finish 1 unit</li>
+<li>Click "Get Daily Treasure"</li>
+<li>Error appears</li>
+</ol>
+</div>
+</div>
+
+<!-- BEHAVIOR -->
+<div class="section">
+<h2 class="section-title">Expected vs Actual</h2>
+
+<div class="behavior">
+<div class="card expected">
+<h4>✅ Expected</h4>
+<p>Reward should be successfully granted, reflected in the user account, and visually confirmed without errors.</p>
+</div>
+
+<div class="card actual">
+<h4>❌ Actual</h4>
+<p>Clicking the button results in a generic client-side error with no meaningful feedback or reward granted.</p>
+</div>
+</div>
+</div>
+
+<!-- VIDEO -->
+<div class="section">
+<h2 class="section-title">Video Demonstration</h2>
+
+<div class="video-grid">
+
+<div class="video-container">
+<video controls muted>
+<source src="vid1.mp4">
+</video>
+</div>
+
+<div class="video-container">
+<video controls muted>
+<source src="vid2.mp4">
+</video>
+</div>
+
+</div>
+</div>
+
+<!-- ANALYSIS -->
+<div class="section">
+<h2 class="section-title">Root Causes</h2>
+
+<div class="analysis">
+<ul>
+<li><strong>Missing Error Handling:</strong> Allows failures to surface as generic client-side crashes without useful feedback.</li>
+<li><strong>Backend API Failure:</strong> May be returning invalid or malformed responses that the frontend cannot properly process.</li>
+<li><strong>Authentication Issue:</strong> Expired or missing tokens can block the request before it completes successfully.</li>
+<li><strong>State Mismatch:</strong> Client and server conditions may be out of sync, leading to invalid reward requests.</li>
+<li><strong>Lack of Logging:</strong> Prevents capturing meaningful debugging information during failure scenarios.</li>
+</ul>
+</div>
+</div>
+
+<!-- SOLUTIONS -->
+<div class="section">
+<h2 class="section-title">Solutions</h2>
+
+<div class="solutions">
+<ol>
+<li><strong>Structured Error Handling:</strong> Capture failures properly and display meaningful messages instead of generic errors.</li>
+<li><strong>API Response Validation:</strong> Ensure backend endpoints return consistent and properly formatted responses.</li>
+<li><strong>Token Management:</strong> Validate and refresh authentication tokens before sending reward requests.</li>
+<li><strong>Client-Side Validation:</strong> Re-check user eligibility conditions before triggering the reward claim.</li>
+<li><strong>Error Logging Integration:</strong> Record errors with context to enable faster debugging and monitoring.</li>
+</ol>
+</div>
+</div>
+
+<!-- ENV -->
+<div class="section">
+<h2 class="section-title">Environment</h2>
+
+<div class="env">
+<p>URL: https://www.hackquest.io</p>
+<p>Browser: Chrome / Edge</p>
+<p>OS: Windows / macOS</p>
+</div>
+</div>
+
+<!-- NOTES -->
+<div class="section">
+<h2 class="section-title">Notes</h2>
+
+<div class="notes">
+Daily reward failures negatively impact user trust and engagement, especially when users complete all requirements but cannot claim rewards.
+</div>
+</div>
+
+</div>
+</div>
+
 </body>
 </html>

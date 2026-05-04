@@ -41,5 +41,5 @@ Generic error modal; console shows no useful debug info.
 `Chrome/Firefox/Edge` | `Windows/macOS/Linux` | `hackquest.io` (Prod)
 
 ## 📎 Attachments
-- [bug-report.html](bug-report.html) — Interactive report page
+- [bug-report.html](https://sundaralok.github.io/HackQuest-Advocate/Bugs/HackQuest_Platform/Get%20Daily%20Treasure/) — Interactive report page
 - Videos: `vid1.mp4`, `vid2.mp4`
