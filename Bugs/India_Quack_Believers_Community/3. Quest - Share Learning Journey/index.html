@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bug Report - Quest Reset Freeze | HackQuest</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f7fb;
+    padding: 30px;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 950px;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* 🟢 SMOOTH GREEN HEADER */
+.header {
+    background: linear-gradient(135deg, #00c853, #64dd17);
+    color: white;
+    padding: 35px;
+    text-align: center;
+}
+
+.header h1 {
+    margin-bottom: 8px;
+}
+
+/* CONTENT */
+.content {
+    padding: 30px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section h2 {
+    border-left: 5px solid #00c853;
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+
+/* CARDS */
+.card {
+    padding: 18px;
+    border-radius: 10px;
+}
+
+.issue {
+    background: #ffecec;
+    border-left: 4px solid #ff5252;
+}
+
+.expected {
+    background: #e8f5e9;
+    border-left: 4px solid #2e7d32;
+}
+
+.actual {
+    background: #ffebee;
+    border-left: 4px solid #c62828;
+}
+
+/* STEPS */
+ol li {
+    margin-bottom: 8px;
+}
+
+/* PROOF */
+.proof img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* VIDEO */
+video {
+    width: 100%;
+    border-radius: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>🐛 Quest Reset Freeze Bug</h1>
+<p>Task remains locked and does not reset after completion cycle</p>
+</div>
+
+<div class="content">
+
+<!-- SUMMARY -->
+
+<div class="section">
+<h2>Bug Summary</h2>
+<div class="card issue">
+After completing the quest <b>"Share Your Web3 Learning Journey on Twitter"</b>, 
+the task remains in a frozen state and does NOT reset even after more than one month, 
+despite being designed as a repeatable/resetting quest.
+</div>
+</div>
+
+<!-- STEPS -->
+
+<div class="section">
+<h2>Steps to Reproduce</h2>
+<ol>
+<li>Complete the quest and submit required proof</li>
+<li>Wait for approval (quest gets approved ✅)</li>
+<li>Check quest status after days/weeks</li>
+<li>Even after ~1 month → task still not reset</li>
+</ol>
+</div>
+
+<!-- EXPECTED VS ACTUAL -->
+
+<div class="section">
+<h2>Expected vs Actual</h2>
+
+<div class="card expected">
+<b>✅ Expected:</b><br>
+Quest should reset automatically after its cooldown period (monthly behavior),
+allowing user to complete it again.
+</div>
+
+<br>
+
+<div class="card actual">
+<b>❌ Actual:</b><br>
+Quest remains permanently locked/frozen after approval.<br>
+No reset, no retry option, no state change.
+</div>
+
+</div>
+
+<!-- PROOF -->
+
+<div class="section">
+<h2>📸 Proof (Screenshots)</h2>
+<div class="proof">
+<img src="Screenshot (4222).png" alt="Proof 1">
+<img src="Screenshot (4223).png" alt="Proof 2">
+</div>
+</div>
+
+<!-- VIDEO -->
+
+<div class="section">
+<h2>🎥 Video Proof</h2>
+<video controls>
+<source src="video.mp4">
+</video>
+</div>
+
+<!-- ANALYSIS -->
+
+<div class="section">
+<h2>Possible Cause</h2>
+<ul>
+<li>Quest reset scheduler not triggering</li>
+<li>Status stuck in "Approved" state without lifecycle transition</li>
+<li>Missing backend cron job or reset condition</li>
+<li>Frontend not refreshing quest availability state</li>
+</ul>
+</div>
+
+<!-- IMPACT -->
+
+<div class="section">
+<h2>Impact</h2>
+<div class="card issue">
+Users cannot reattempt recurring quests → loss of engagement and rewards.<br>
+Breaks expected gamification loop.
+</div>
+</div>
+
+<!-- ENV -->
+
+<div class="section">
+<h2>Environment</h2>
+<ul>
+<li>Platform: HackQuest Web</li>
+<li>Browser: Chrome / Edge</li>
+<li>OS: Windows</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>
